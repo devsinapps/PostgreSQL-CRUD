@@ -1,0 +1,59 @@
+Set Up / Install postgreSQL on Ubuntu
+
+Step
+	1. Open Terminal
+	2. type 'sudo apt-get update'
+	3. type 'sudo apt-get install postgresql postgresql-contrib'
+		if Success install, check postgre with command
+		'ls /etc/postgresql/verSql/main/'
+
+		type 'service postgresql' to see service
+		this list service postgresql
+		1. /etc/init.d/postgresql start
+		2. /etc/init.d/postgresql stop
+		3. /etc/init.d/postgresql restart
+		4. /etc/init.d/postgresql reload
+		5. /etc/init.d/postgresql force-reload
+		6. /etc/init.d/postgresql status
+
+		after start / running postgres
+		- type 'sudo su postgres' 
+		- type 'psql'
+		- type '\l' to see list database
+		- type '\du' to see user database
+		- type ALTER USER postgres WITH PASSWORD 'admin'; to set default password on user postgres
+		- type CREATE USER admin WITH PASSWORD 'admin'; to create new user for database
+
+		//ADD permission SUPERUSER to new User 
+		- type 'ALTER USER admin WITH SUPERSUER;'
+
+	4. Install pgAdmin 4
+		- Open Terminal
+		  type 'sudo apt-get install python2.7-dev virtualenv python-pip libpq-dev'
+		  type 'cd /'
+		  type 'mkdir -p pgadmin4'
+		  type 'cd pgadmin4'
+		  type 'virtualenv venv -p /usr/bin/python2.7'
+		  type 'source ./venv/bin/activate'
+
+		  open link on your browser
+		  https://www.pgadmin.org/download/pgadmin-4-python-wheel/
+		  and choose packect pgAdmin 4
+		  or copy this link
+		  https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.2/pip/pgadmin4-4.2-py2.py3-none-any.whl
+		  type 'wget https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.2/pip/pgadmin4-4.2-py2.py3-none-any.whl'
+		  type 'sudo pip install pgadmin4-4.2-py2.py3-none-any.whl'
+		  type 'cp ./venv/lib/python2.7/site-packages/pgadmin4/config.py ./venv/lib/python2.7/site-packages/pgadmin4/config_local.py'
+		  type 'python ./venv/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py' to running pgAdmin4
+	5. Done
+
+	NOTE:
+	 To Open or Running pgAdmin after install
+	 1. in to directory pgadmin
+	 	type 'cd /'
+	 	type 'cd pgadmin'
+	 2. in to venv 
+	 	type 'source ./venv/bin/activate'
+	 	type 'python ./venv/lib/python2.7/site-packages/pgadmin4/pgAdmin4.py'
+	 3. to stop pgadmin
+	 	push CTRL + C

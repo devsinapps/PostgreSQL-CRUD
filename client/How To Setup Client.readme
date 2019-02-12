@@ -1,0 +1,11 @@
+Set Up / Install server Side
+
+Step if Form Beginning
+	1. open terminal this / client directory
+	2. type 'npm install axios bootstrap firebase gulp@3.9.1 gulp-minify-css gulp-sass gulp-watch moment node-sass react-redux@5.1.1 react-redux-firebase react-router-dom reactstrap redux redux-firestore redux-thunk --save' to install package
+
+
+
+Step If you got this code from Github
+	1. open terminal this / client directory (client)
+	2. type 'npm install' to install package

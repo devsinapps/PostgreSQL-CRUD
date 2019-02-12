@@ -1,0 +1,13 @@
+Set Up / Install server Side
+
+Step if Form Beginning
+	1. open terminal this / server directory
+	2. type 'touch server.js' or create file with name 'server.js'
+	3. type 'npm init -y'
+	4. type 'npm install 'body-parser morgan pg express --save' to install package
+
+
+
+Step If you got this code from Github
+	1. open terminal this / server directory (server)
+	2. type 'npm install' to install package
