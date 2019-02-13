@@ -1,8 +1,24 @@
 import React from 'react'
 import { Row, Col, Form, FormGroup, Label, Input, CustomInput, Button } from 'reactstrap'
 class EmployeeForm extends React.Component{
+	//Make State To Handle Combobox Country States
+	state = {
+		city: []
+	}
+
+	//Handle Contry if Clicked
+		//And set State with object
+	getCityFromCountry = (country) => {
+		this.setState({
+			city: country.states
+		})
+	}
 	render(){
-		const { value } = this.props
+		//Distruction state
+		const { city } = this.state
+		//Distruction props
+		const { value, countryStates } = this.props
+		//Make condition enabled button
 		const enabled = value.employeeId > 0
 		return(
 			<Form onSubmit={this.props.addEmployee}>
@@ -61,21 +77,27 @@ class EmployeeForm extends React.Component{
 					<Col md='4'>
 						<FormGroup>
 							<Label htmlFor='country'> Country </Label>
-							<Input
-								id='country'
-								value={value.country}
-								onChange={this.props.onChange}
-							/>
+							<CustomInput type='select' id='country' onChange={this.props.onChange}>
+								<option value={value.country}> {value.country} </option>
+								{countryStates.map((country)=>{
+									return(
+										<option value={country.country} key={country.country} onClick={() => this.getCityFromCountry(country)}> {country.country} </option>
+									)
+								})}
+							</CustomInput>
 						</FormGroup>
 					</Col>
 					<Col md='4'>
 						<FormGroup>
 							<Label htmlFor='city'> City </Label>
-							<Input
-								id='city'
-								value={value.city}
-								onChange={this.props.onChange}
-							/>
+							<CustomInput type='select' id='city' onChange={this.props.onChange}>
+								<option value={value.city}> {value.city} </option>
+								{city.map((ct)=>{
+									return(
+										<option value={ct} key={ct}> {ct} </option>
+									)
+								})}
+							</CustomInput>
 						</FormGroup>
 					</Col>
 					<Col md='4'>
@@ -113,6 +135,7 @@ class EmployeeForm extends React.Component{
 				<FormGroup className='text-center'>
 					<Label htmlFor='btn' hidden> Last Name </Label>
 					<Button color='primary' disabled={enabled}> Save </Button> {' '}
+					<Button color='warning' disabled={!enabled} onClick={this.props.updateEmployee}> Update </Button> {' '}
 					<Button color='danger' onClick={this.props.deleteEmployee} disabled={!enabled}> Delete </Button> {' '}
 					<Button color='info' onClick={this.props.resetButton}> Reset </Button> {' '}
 				</FormGroup>

@@ -3,6 +3,7 @@ import moment from 'moment'
 import { Table } from 'reactstrap'
 class EmployeeTable extends React.Component{
 	render(){
+		//Distruction props
 		const { employees } = this.props
 		let number = 1
 		return(

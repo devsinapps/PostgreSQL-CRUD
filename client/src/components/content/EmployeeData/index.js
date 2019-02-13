@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+//Tools
+import { connect } from 'react-redux'
 //Component
 import EmployeeTable from './EmployeeTable'
 import EmployeeForm from './EmployeeForm'
@@ -90,7 +92,10 @@ class EmployeeData extends Component{
 		fetch(request)
 		.then((response)=>{
 			response.json()
-				.then(function(data){
+				// .then(function(data){
+				// 	console.log(data)
+				// })
+				.then((data)=>{
 					console.log(data)
 				})
 		})
@@ -125,7 +130,7 @@ class EmployeeData extends Component{
 				return employee.id === employeeId
 			})
 
-			//Make API from server
+			//Make API from server and send Id 
 			const request = new Request('http://localhost:3001/api/delete-employee/'+employeeId,{
 				method: "DELETE"
 			})
@@ -160,6 +165,39 @@ class EmployeeData extends Component{
 		}
 	}
 
+	//Handle Update Employee
+	updateEmployee = () => {
+		const { employees, employeeId } = this.state
+		const { firstname, lastname, age, gender, email, country, city, address, education, joindate } = this.state
+		const data = {
+			firstname,
+			lastname,
+			age,
+			gender,
+			email,
+			country,
+			city,
+			address,
+			education,
+			joindate
+		}
+
+		const request = new Request('http://localhost:3001/api/update-employee/'+employeeId,{
+			method: 'PUT',
+			headers: new Headers({ 'Content-Type': 'application/json'}),
+			body: JSON.stringify(data)
+		})
+
+		fetch(request)
+			.then((response)=>{
+				response.json()
+				.then((data)=>{
+					console.log(data)
+				})
+			})
+
+	}
+
 	//Handle Reset Button 
 	resetButton = () => {
 		this.setState({
@@ -179,8 +217,13 @@ class EmployeeData extends Component{
 
 	
 	render(){
+		//Disctruction state
 		const { employees } = this.state
+		//Country States from reducer
+		const { countryStates } = this.props
+		//Disctruction state
 		const { employeeId, firstname, lastname, age, gender, email, country, city, address, education, joindate } = this.state
+		//Make Variable For State
 		const value = { employeeId, firstname, lastname, age, gender, email, country, city, address, education, joindate }
 		return(
 			<div className='EmployeeData'>
@@ -203,10 +246,12 @@ class EmployeeData extends Component{
 								<CardBody>
 									<EmployeeForm 
 										value={value}
+										countryStates={countryStates}
 										onChange={this.onChange}
 										addEmployee={this.addEmployee}
 										deleteEmployee={this.deleteEmployee}
 										resetButton={this.resetButton}
+										updateEmployee={this.updateEmployee}
 									/>
 								</CardBody>
 							</Card>
@@ -218,4 +263,11 @@ class EmployeeData extends Component{
 	}
 }
 
-export default EmployeeData
+
+const mapStateToProps = (state) => {
+	return{
+		countryStates: state.countryStates
+	}
+}
+
+export default connect(mapStateToProps)(EmployeeData)

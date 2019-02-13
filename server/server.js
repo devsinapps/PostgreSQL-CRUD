@@ -103,4 +103,49 @@ app.use(function(request, response, next) {
 		})
 	}))
 
+
+	//Actions update
+	app.put('/api/update-employee/:id', ((request, response)=>{
+		//Get Value from Client (Form Input onchange)
+		const id 		= request.params.id;
+		const firstname = request.body.firstname;
+		const lastname 	= request.body.lastname;
+		const age 		= request.body.age;
+		const email 	= request.body.email;
+		const gender 	= request.body.gender;
+		const country 	= request.body.country;
+		const city 		= request.body.city;
+		const address 	= request.body.address;
+		const education = request.body.education;
+		const joindate 	= request.body.joindate;
+
+		pool.connect((err, db, done)=>{
+			if(err){
+				return response.status(400).send(err);
+			}else{
+				//Set value from client to value database where id is id Row Clicked
+				db.query(`UPDATE human_resources.employees SET 
+							firstname='${firstname}', 
+							lastname='${lastname}', 
+							age=${age}, 
+							gender='${gender}',
+							email='${email}', 
+							country='${country}', 
+							city='${city}', 
+							address='${address}', 
+							education='${education}', 
+							joindate='${joindate}' 
+							WHERE id=${id}`), (err,table) => {
+					if(err){
+						return response.status(400).send(err);
+					}
+					else{
+						console.log("DATA UPDATED");
+						response.status(201).send({message: 'DATA UPDATED'});
+					}
+				}
+			}
+		})
+	}))
+
 app.listen(PORT, () => console.log('Postgresql Server On Port ' + PORT))
